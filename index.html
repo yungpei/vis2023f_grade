@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant-TW">
+
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+
+  body {
+    background-color: rgba(255, 128, 255, 0.1);
+  }
+
+  table {
+    border-collapse: collapse;
+    border: 2px black solid;
+    font: 16px sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+  }
+
+  td,
+  th {
+    border: 1px black solid;
+    padding: 5px;
+    background-color: rgba(255, 255, 0, 0.1);
+  }
+
+  td img {
+    transition: width, height;
+    transition-duration: 0.5s;
+    /* width: 50px; */
+    height: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
+
+  div {
+    margin: 16px auto;
+  }
+
+  .v {
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation */
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+</style>
+</head>
+
+<body>
+<div>
+
+    
+<table>
+<tr>
+    <td class="v">庶人用黃<img src="./svg10/00.svg">none</td>
+    <td class="v">庶人用黃<img src="./svg10/01.svg">0</td>    
+    <td class="v">八品服青<img src="./svg10/11.svg">1</td>
+    <td class="v">八品服青<img src="./svg10/12.svg">2</td>
+    <td class="v">六品服綠<img src="./svg10/21.svg">3</td>
+    <td class="v">六品服綠<img src="./svg10/22.svg">4</td>
+    <td class="v">五品服緋<img src="./svg10/31.svg">5</td>
+    <td class="v">五品服緋<img src="./svg10/32.svg">6</td>
+    <td class="v">三品服紫<img src="./svg10/41.svg">7</td>
+    <td class="v">三品服紫<img src="./svg10/42.svg">8</td>
+    <td class="v">天子赤黃<img src="./svg10/51.svg">9</td>
+    <td class="v">天子赤黃<img src="./svg10/52.svg">10</td>
+</tr>
+</table>
+</div>
+
+<div></div>
+
+<script src="./d3.v3.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+    d3.text("./csv/data.csv", function (data) {
+
+        //var parsedCSV = d3.csv.parseRows(data);
+        parsedCSV = d3.csv.parseRows(data);
+
+        //console.log(parsedCSV);
+
+        var container = d3.select("body")
+            .append("table")
+
+            .selectAll("tr")
+            .data(parsedCSV).enter()
+            .append("tr")
+
+            .selectAll("td")
+            .data(function (d) { 
+                return d; 
+            }).enter()
+            .append("td")
+//            .attr("width", function(d,i){
+//                if (i == 2)
+//                  return 128;
+//            })
+//
+//          https://ntut-cg-lab.github.io/cg2021f-hw00-cindy9176503/
+//          https://raw.githubusercontent.com/NTUT-CG-Lab/cg2021f-hw00-changken/main/me.svg
+//
+            .html(function (d, i) {
+                if ( d > 20 ) {
+                     return d;
+                }
+                else if ( d == 'GitHub 帳號') {
+                    return d;
+                }
+                else if ( i == 4) {
+                    return '<a href="https://' + d + '.github.io/vis2023f/">' + d + ' <img src="https://raw.githubusercontent.com/' + d + '/vis2023f/main/hw00/me.jpg">' + '</a>';
+                }
+                else if ( i == 0 || isNaN(d)) {
+                    return d;
+                }
+            })
+            .filter(function (d, i) { 
+                return (d <= 20 && i > 2 && !isNaN(d) && d != ""); 
+            })
+            .append("img")
+            .attr("src", function (d, i) {
+                //alert('d = ' + d);
+
+                if (d > 19) 
+                    return "./svg10/52.svg"; 
+                else if (d > 18) 
+                    return "./svg10/51.svg"; 
+                else if (d > 16) 
+                    return "./svg10/42.svg"; 
+                else if (d > 14) 
+                    return "./svg10/41.svg"; 
+                else if (d > 12) 
+                    return "./svg10/32.svg"; 
+                else if (d > 10) 
+                    return "./svg10/31.svg"; 
+                else if (d > 8) 
+                    return "./svg10/22.svg"; 
+                else if (d > 6) 
+                    return "./svg10/21.svg"; 
+                else if (d > 4) 
+                    return "./svg10/12.svg"; 
+                else if (d > 2) 
+                    return "./svg10/11.svg"; 
+                else if (d > 1) 
+                    return "./svg10/01.svg"; 
+                else 
+                    return "./svg10/00.svg"; 
+            })
+            .attr("width", 50)
+            .attr("height", 50)
+            ;
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+
+  body {
+    background-color: rgba(255, 128, 255, 0.1);
+  }
+
+  table {
+    border-collapse: collapse;
+    border: 2px black solid;
+    font: 16px sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+  }
+
+  td,
+  th {
+    border: 1px black solid;
+    padding: 5px;
+    background-color: rgba(255, 255, 0, 0.1);
+  }
+
+  td img {
+    transition: width, height;
+    transition-duration: 0.5s;
+    /* width: 50px; */
+    height: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
+
+  div {
+    margin: 16px auto;
+  }
+
+  .v {
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/text-orientation */
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+</style>
+</head>
+
+<body>
+<div>
+
+<table>
+<tr>
+    <td class="v"><img src="./svg10/00.svg">缺席</td>
+    <td class="v"><img src="./svg10/32.svg">平日簽到</td>
+    <td class="v"><img src="./svg10/52.svg">美術館簽到</td>
+</tr>
+</table>
+</div>
+
+<div></div>
+
+<script src="./d3.v3.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+    d3.text("./csv/attend.csv", function (data) {
+
+        //var parsedCSV = d3.csv.parseRows(data);
+        parsedCSV = d3.csv.parseRows(data);
+
+        //console.log(parsedCSV);
+
+        var container = d3.select("body")
+            .append("table")
+
+            .selectAll("tr")
+            .data(parsedCSV).enter()
+            .append("tr")
+
+            .selectAll("td")
+            .data(function (d) { 
+                return d; 
+            }).enter()
+            .append("td")
+
+            .html(function (d, i) {
+                if ( d > 20 ) {
+                     return d;
+                }
+                else if ( i == 2) {
+                    return d;
+                }
+                else if ( i == 19 ||  i == 0 || isNaN(d)) {
+                    return d;
+                }
+            })
+            .filter(function (d, i) { 
+                return (i < 19 && i > 2 && !isNaN(d) && d != ""); 
+            })
+            .append("img")
+            .attr("src", function (d, i) {
+                //alert('d = ' + d);
+
+            if (d == 2 && i != 19)
+              return "./svg10/52.svg";
+            else if (d == 1 && i != 19) 
+              return "./svg10/32.svg";
+            else if (d == 0 && i != 19)
+              return "./svg10/00.svg";
+            })
+            .attr("width", 50)
+            .attr("height", 50)
+            ;
+    });
+</script>
+</body>
+
+</html>
