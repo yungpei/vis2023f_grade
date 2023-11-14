@@ -107,53 +107,38 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    d3.text("./csv/attend.csv", function (data) {
+d3.text("./csv/attend.csv", function (data) {
+    var parsedCSV = d3.csv.parseRows(data);
+    // It then parses the CSV data into rows and columns, 
+    // and the result is stored in the parsedCSV variable.
 
-        //var parsedCSV = d3.csv.parseRows(data);
-        parsedCSV = d3.csv.parseRows(data);
-
-        var container = d3.select("#div2")
-            .append("table")
-
-            .selectAll("tr")
-            .data(parsedCSV).enter()
-            .append("tr")
-
-            .selectAll("td")
-            .data(function (d) { 
-                return d; 
-            }).enter()
-            .append("td")
-
-            .html(function (d, i) {
-                if ( d > 20 ) {
-                     return d;
-                }
-                else if ( i == 2) {
+    var container = d3.select("#div2")
+        .append("table")
+        .selectAll("tr")
+        .data(parsedCSV).enter()
+        .append("tr")
+        .selectAll("td")
+        .data(function (d) { return d; }).enter()
+        .append("td")
+        .html(function (d, i) {
+            // Check for conditions or directly display the attendance images
+            if (i < 19 && i > 2 && !isNaN(d) && d !== "" && parsedCSV[parsedCSV.length - 1][i] !== "總計") {
+            //  i 必須小於 19; i 必須大於 2; d 必須是一個數字; d 不得為空字串; parsedCSV 陣列的最後一個元素中的第 i 個元素不得為字符串 "總計"
+              
+                if (d == 2 && i != 17)
+                    return '<img src="./svg10/52.svg" width="50" height="50">';
+                else if (d == 1 && i != 17)
+                    return '<img src="./svg10/32.svg" width="50" height="50">';
+                else if (d == 0 && i != 17)
+                    return '<img src="./svg10/00.svg" width="50" height="50">';
+                else
                     return d;
-                }
-                else if ( i == 19 ||  i == 0 || isNaN(d)) {
-                    return d;
-                }
-            })
-            .filter(function (d, i) { 
-                return (i < 19 && i > 2 && !isNaN(d) && d != ""); 
-            })
-            .append("img")
-            .attr("src", function (d, i) {
-                //alert('d = ' + d);
+            } else {
+                return d;
+            }
+        });
+});
 
-            if (d == 2 && i != 19)
-              return "./svg10/52.svg";
-            else if (d == 1 && i != 19) 
-              return "./svg10/32.svg";
-            else if (d == 0 && i != 19)
-              return "./svg10/00.svg";
-            })
-            .attr("width", 50)
-            .attr("height", 50)
-            ;
-    });
 </script>
 </body>
 
