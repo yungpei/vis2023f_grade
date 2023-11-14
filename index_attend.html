@@ -1,29 +1,61 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 <head>
+<title>出席成績表</title>
 <meta charset="utf-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+  @font-face {
+        font-family:'CircleFont'; 
+        src: url(CircleFont_v2.woff2);
+    }
 
-  body {
-    background-color: rgba(255, 128, 255, 0.1);
-  }
+    h3 {
+        background-color: rgba(255, 255, 0, 0.1);
+        color: white; 
+        text-shadow: 0 0 6px #FF0000, 0 0 6px #000000;
+        font-family: 'CircleFont', 'Noto Serif JP', serif;
+        font-size: 18pt;
+        border: solid 1px black;
+        width: 90%;
+        margin: 5px auto;
+        padding: 10px;
+        text-align: center;
+    }
 
-  table {
-    border-collapse: collapse;
-    border: 2px black solid;
-    font: 16px sans-serif;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 8px;
-  }
+    div {
+        background-color: rgba(255, 255, 0, 0.1);
+        font-family: 'CircleFont', 'Noto Serif JP', serif;
+        font-size: 16pt;
+        border: solid 1px black;
+        width: 90%;
+        margin: 5px auto;
+        padding: 10px;
+        text-align: center;
+    }
 
-  td,
-  th {
-    border: 1px black solid;
-    padding: 5px;
-    background-color: rgba(255, 255, 0, 0.1);
-  }
+    body {
+        background-color: rgba(255, 128, 255, 0.1);
+        font-family: 'CircleFont', 'Noto Serif JP', serif;
+    }
+
+    table {
+        border-collapse: collapse;
+        border: 2px black solid;
+        font-family: 'CircleFont', 'Noto Serif JP', serif;
+        font-size: 16pt;
+        /* font: 16px sans-serif; */
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    td,
+    th {
+        border: 1px black solid;
+        padding: 5px;
+        background-color: rgba(128, 255, 255, 0.1);
+    }
 
   td img {
     transition: width, height;
@@ -40,7 +72,14 @@
   }
 
   div {
-    margin: 16px auto;
+    background-color: rgba(255, 255, 0, 0.1);
+        font-family: 'CircleFont', 'Noto Serif JP', serif;
+        font-size: 16pt;
+        border: solid 1px black;
+        width: 90%;
+        margin: 5px auto;
+        padding: 10px;
+        text-align: center;
   }
 
   .v {
@@ -52,8 +91,8 @@
 </head>
 
 <body>
-<div>
-
+  <h3>Data Visualization 出席表</h3>
+<div id="div1">
 <table>
 <tr>
     <td class="v"><img src="./svg10/00.svg">缺席</td>
@@ -62,8 +101,7 @@
 </tr>
 </table>
 </div>
-
-<div></div>
+<div id="div2"></div>
 
 <script src="./d3.v3.min.js"></script>
 
@@ -74,9 +112,7 @@
         //var parsedCSV = d3.csv.parseRows(data);
         parsedCSV = d3.csv.parseRows(data);
 
-        //console.log(parsedCSV);
-
-        var container = d3.select("body")
+        var container = d3.select("#div2")
             .append("table")
 
             .selectAll("tr")
