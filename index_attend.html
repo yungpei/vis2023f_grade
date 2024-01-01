@@ -126,7 +126,7 @@ d3.text("./csv/attend.csv", function (data) {
         .append("td")
         .html(function (d, i) {
             // Check for conditions or directly display the attendance images
-            if (i < 19 && i > 2 && !isNaN(d) && d !== "" && parsedCSV[parsedCSV.length - 1][i] !== "總計") {
+            if (i < 20 && i > 2 && !isNaN(d) && d !== "" && parsedCSV[parsedCSV.length - 1][i] !== "總計") {
             //  i 必須小於 19; i 必須大於 2; d 必須是一個數字; d 不得為空字串; parsedCSV 陣列的最後一個元素中的第 i 個元素不得為字符串 "總計"
                 if (i === 3) {
                 // 如果是姓名欄位
