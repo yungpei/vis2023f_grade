@@ -190,22 +190,55 @@
             .data(function (d) { return d; }).enter()
             .append("td")
             .html(function (d, i) {
-                if ( i == 4 && d != 'GitHub' ) {
+                if (i == 15) {
+                    // 總分那一列
+                    return '<span class="numeric-score">' + d + '</span>';
+                } 
+                else if (i == 4 && d != 'GitHub') {
                     return '<a href="https://' + d + '.github.io/vis2023f/" target="_blank"><img src="https://' + d + '.github.io/vis2023f/hw00/me.jpg"></a>' + '<hr><a href="https://github.com/' + d + '/vis2023f/" target="_blank">' + d + '</a>';
-                }
-                else if ( i == 0 || i == 2 || isNaN(d)) { // 序號、學號 要顯示
+                } 
+                else if (i == 0 || i == 2 || isNaN(d)) { // 序號、學號 要顯示
                     return d;
+                } 
+                else { // 其他列
+                    if (i >= 5 && i <= 14) { // 5到14列顯示 SVG 圖檔
+                        return '<img src="' + getSvgPath(+d) + '" width="50" height="50">';
+                    }
+                    else {
+                    // 其他列顯示數字
+                    /*
+                    var cell = d3.select(this);
+                    cell.append("img")
+                        .attr("src", function () {
+                            if (d == 11) return "./svg10/53.svg";
+                            else if (d == 10) return "./svg10/52.svg";
+                            else if (d == 9) return "./svg10/51.svg";
+                            else if (d == 8) return "./svg10/42.svg";
+                            else if (d == 7) return "./svg10/41.svg";
+                            else if (d == 6) return "./svg10/32.svg";
+                            else if (d == 5) return "./svg10/31.svg";
+                            else if (d == 4) return "./svg10/22.svg";
+                            else if (d == 3) return "./svg10/21.svg";
+                            else if (d == 2) return "./svg10/12.svg";
+                            else if (d == 1) return "./svg10/11.svg";
+                            else if (d == 0) return "./svg10/01.svg";
+                            else return "./svg10/00.svg";
+                        })
+                        .attr("width", 50)
+                        .attr("height", 50);
+                        */
+                        return d;
+                    }
                 }
             })
             .filter(function (d, i) {
                 return ( i > 4 && !isNaN(d) ); // && !isNaN(d) && d != ""
             }) 
             .attr("class", function (d, i) { 
-                if (d == 11) return "excellent-kid"; 
-                else if (d >= 7 ) return "good-kid"; 
-                else if (d >= 2 ) return "fair-kid"; 
-                else return "poor-kid";})
-            .append("img")
+                return (i == 15) ? "numeric-score" : (d == 11) ? "excellent-kid" : (d >= 7) ? "good-kid" : (d >= 2) ? "fair-kid" : "poor-kid"; 
+            })
+            
+            /*.append("img")
             .attr("src", function (d, i) {
                 if (d == 11) 
                     return "./svg10/53.svg";
@@ -235,9 +268,26 @@
                     return "./svg10/00.svg";
             })
             .attr("width", 50)
-            .attr("height", 50)
+            .attr("height", 50)*/
             ;
     });
+    function getSvgPath(d) {
+    switch (d) {
+        case 11: return "./svg10/53.svg";
+        case 10: return "./svg10/52.svg";
+        case 9: return "./svg10/51.svg";
+        case 8: return "./svg10/42.svg";
+        case 7: return "./svg10/41.svg";
+        case 6: return "./svg10/32.svg";
+        case 5: return "./svg10/31.svg";
+        case 4: return "./svg10/22.svg";
+        case 3: return "./svg10/21.svg";
+        case 2: return "./svg10/12.svg";
+        case 1: return "./svg10/11.svg";
+        case 0: return "./svg10/01.svg";
+        default: return "./svg10/00.svg";
+    }
+}
     </script>
 </body>
 
